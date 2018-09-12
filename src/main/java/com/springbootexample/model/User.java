@@ -4,9 +4,7 @@ package com.springbootexample.model;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static javax.persistence.FetchType.EAGER;
 

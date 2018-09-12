@@ -19,7 +19,7 @@ public class DemoApplicationTests {
 
     @Test
     public void contextLoads() {
-        System.out.println("Context Loaded Successfully");
+
     }
 
     @Autowired
@@ -34,7 +34,7 @@ public class DemoApplicationTests {
 
 //    @Test
 //    public void createUser() {
-//
+//        User user = new User();
 //        user.setName("Bruce Wayne");
 //        user.setEmail("bruce@JL.com");
 //        user.setPhoneNumbers("9876543210");
@@ -48,12 +48,12 @@ public class DemoApplicationTests {
     public void readUsers() {
         ArrayList<Integer> list = new ArrayList<>();
         userRepository.findAll().forEach(e -> list.add(e.getId()));
-        System.out.println("#######################################################");
+        System.out.println("########################################################");
         for (int i = 0; i < userRepository.count(); i++) {
             User user = userRepository.findById(list.get(i)).orElse(null);
             System.out.println(user.getId() + " : " + user.getName() + " : " + user.getEmail() + " : " + user.getPhoneNumbers());
         }
-        System.out.println("#######################################################");
+        System.out.println("########################################################");
     }
 
 //    @Test
