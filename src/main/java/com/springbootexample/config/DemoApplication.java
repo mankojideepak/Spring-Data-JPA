@@ -16,6 +16,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +34,9 @@ import java.util.List;
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(DemoApplication.class);
+
+    @PersistenceContext
+    private EntityManager entitymanager;
 
 //    @Autowired
 //    private ProductRepository ProductRepository;
@@ -133,6 +142,23 @@ public class DemoApplication implements CommandLineRunner {
         System.out.println(" -- finding by dept Sales sort by 'salary' and 'name'  --");
         List<Employee> list = repo.findByDept("Sales", Sort.by("salary", "name").ascending());
         list.forEach(System.out::println);
+
+
+        CriteriaBuilder criteriaBuilder = entitymanager.getCriteriaBuilder();
+        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
+        Root from = criteriaQuery.from(Employee.class);
+
+        //select all records
+        System.out.println("Selecting All Records");
+        CriteriaQuery select = criteriaQuery.select(from);
+        TypedQuery typedQuery = entitymanager.createQuery(select);
+        List resultlist = typedQuery.getResultList();
+
+        for(Object o:resultlist) {
+            Employee e = (Employee)o;
+            System.out.println("EID : " + e.getId() + " Ename : " + e.getName());
+        }
+        entitymanager.close( );
     }
 
 //    private List<Employee> createEmployees() {
