@@ -51,7 +51,7 @@ public class DemoApplicationTests {
         System.out.println("########################################################");
         for (int i = 0; i < userRepository.count(); i++) {
             User user = userRepository.printUserbyId(list.get(i));
-            System.out.println(user.getId() + " : " + user.getName() + " : " + user.getEmail() + " : " + user.getPhoneNumbers());
+            System.out.println(user.getId() + " : " + user.getName() + " : " + user.getEmail() + " : " + user.getPhoneNumbers() + ".");
         }
         System.out.println("########################################################");
     }
@@ -88,6 +88,6 @@ public class DemoApplicationTests {
         String s = userRepository.getEmailByName("Vipul");
         System.out.println(s);
     }
-    
+
 
 }
