@@ -71,16 +71,16 @@ public class DemoApplicationTests {
 //        System.out.println("Deletion successful");
 //    }
 
-    @Test
-    public void readBooks() {
-        ArrayList<Integer> list = new ArrayList<>();
-        bookCategoryRepository.findAll().forEach(e -> list.add(e.getId()));
-        System.out.println("#######################################################");
-        for (int i = 0; i < bookCategoryRepository.count(); i++) {
-            BookCategory bookCategory = bookCategoryRepository.findById(list.get(i)).orElse(null);
-            System.out.println(bookCategory.getId() + " : " + bookCategory.getName());
-        }
-        System.out.println("#######################################################");
-    }
+//    @Test
+//    public void readBooks() {
+//        ArrayList<Integer> list = new ArrayList<>();
+//        bookCategoryRepository.findAll().forEach(e -> list.add(e.getId()));
+//        System.out.println("#######################################################");
+//        for (int i = 0; i < bookCategoryRepository.count(); i++) {
+//            BookCategory bookCategory = bookCategoryRepository.findById(list.get(i)).orElse(null);
+//            System.out.println(bookCategory.getId() + " : " + bookCategory.getName());
+//        }
+//        System.out.println("#######################################################");
+//    }
 
 }
