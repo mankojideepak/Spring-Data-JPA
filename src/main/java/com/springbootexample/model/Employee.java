@@ -3,8 +3,10 @@ package com.springbootexample.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQuery(query = "Select e from Employee e where e.id = :id", name = "findEmployeeNameByid")
 public class Employee {
 
     private @Id
