@@ -46,13 +46,9 @@ public class DemoApplicationTests {
 
     @Test
     public void readUsers() {
-        ArrayList<Integer> list = new ArrayList<>();
-        userRepository.findAll().forEach(e -> list.add(e.getId()));
         System.out.println("########################################################");
-        for (int i = 0; i < userRepository.count(); i++) {
-            User user = userRepository.printUserbyId(list.get(i));
-            System.out.println(user.getId() + " : " + user.getName() + " : " + user.getEmail() + " : " + user.getPhoneNumbers() + ".");
-        }
+        Iterable<User> all = userRepository.findAll();
+        all.forEach(e -> System.out.println(e.getId() + " : " + e.getName() + " : " + e.getEmail() + " : " + e.getPhoneNumbers() + "."));
         System.out.println("########################################################");
     }
 
@@ -83,11 +79,11 @@ public class DemoApplicationTests {
 //        System.out.println("#######################################################");
 //    }
 
-    @Test
-    public void readEmail() {
-        String s = userRepository.getEmailByName("Vipul");
-        System.out.println(s);
-    }
+//    @Test
+//    public void readEmail() {
+//        String s = userRepository.getEmailByName("Vipul");
+//        System.out.println(s);
+//    }
 
 
 }
