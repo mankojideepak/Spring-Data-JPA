@@ -1,4 +1,4 @@
-package com.logicbig.example;
+package com.springbootexample.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
