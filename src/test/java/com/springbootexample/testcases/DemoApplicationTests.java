@@ -2,8 +2,10 @@ package com.springbootexample.testcases;
 
 import com.springbootexample.config.DemoApplication;
 import com.springbootexample.model.BookCategory;
+import com.springbootexample.model.Employee;
 import com.springbootexample.model.User;
 import com.springbootexample.repository.BookCategoryRepository;
+import com.springbootexample.repository.EmployeeRepository;
 import com.springbootexample.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +33,10 @@ public class DemoApplicationTests {
 
     @Autowired
     private BookCategoryRepository bookCategoryRepository;
+
+    @Autowired
+    private EmployeeRepository  employeeRepository;
+
 
 //    @Test
 //    public void createUser() {
@@ -85,5 +91,11 @@ public class DemoApplicationTests {
 //        System.out.println(s);
 //    }
 
+
+    @Test
+    public void getEmpNameByID()
+    {
+        System.out.println(employeeRepository.findEmployeeNameByid(74l).getName());
+    }
 
 }
