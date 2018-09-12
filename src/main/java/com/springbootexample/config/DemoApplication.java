@@ -1,16 +1,24 @@
 package com.springbootexample.config;
 
+import com.springbootexample.model.Employee;
+import com.springbootexample.model.User;
+import com.springbootexample.repository.EmployeeRepository;
+import com.springbootexample.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.List;
 
 
 @EnableAutoConfiguration
@@ -30,13 +38,16 @@ public class DemoApplication implements CommandLineRunner {
 //    @Autowired
 //    private ManufacturerRepository ManufacturerRepository;
 
+    @Autowired
+    private EmployeeRepository repo;
+
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    @Override
-    @Transactional
-    public void run(String... strings) throws Exception {
+//    @Override
+//    @Transactional
+//    public void run(String... strings) throws Exception {
 //		// save a couple of Products
 //		Manufacturer ManufacturerA = new Manufacturer("Manufacturer A");
 //		Manufacturer ManufacturerB = new Manufacturer("Manufacturer B");
@@ -107,6 +118,32 @@ public class DemoApplication implements CommandLineRunner {
 //        for (BookCategory bookCategory : bookCategoryRepository.findAll()) {
 //            logger.info(bookCategory.toString());
 //        }
+//    }
+
+    @Override
+    @Transactional
+    public void run(String... strings) throws Exception {
+//        List<Employee> employees = createEmployees();
+//        repo.saveAll(employees);
+
+        System.out.println(" -- finding all employees --");
+        Iterable<Employee> all = repo.findAll();
+        all.forEach(System.out::println);
+
+        System.out.println(" -- finding by dept Sales sort by 'salary' and 'name'  --");
+        List<Employee> list = repo.findByDept("Sales", Sort.by("salary", "name").ascending());
+        list.forEach(System.out::println);
     }
+
+//    private List<Employee> createEmployees() {
+//        return Arrays.asList(
+//                Employee.create("Diana", "Sales", 2000),
+//                Employee.create("Mike", "Sales", 1000),
+//                Employee.create("Rose", "IT", 4000),
+//                Employee.create("Sara", "Sales", 3000),
+//                Employee.create("Andy", "Sales", 3000),
+//                Employee.create("Charlie", "IT", 2500)
+//        );
+//    }
 
 }
