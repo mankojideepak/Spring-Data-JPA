@@ -12,7 +12,7 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
     //@Query("SELECT e FROM Employee e WHERE e.dept = ?1")
     public List<Employee> findByDept(String deptName, Sort sort);
 
-    Employee findEmployeeNameByid(@Param("id") Long id);
+//    Employee findEmployeeNameByid(Long id);
 
-    Integer countByDept(@Param("dept") String dept);
+    Integer countByDept(String dept);
 }

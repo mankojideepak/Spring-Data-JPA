@@ -14,12 +14,14 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     public String getEmailByName(String name);
 
     @Query("select u from User u where u.id = :myID")
-    public User printUserbyId(@Param("myID") Integer myId);
+    public User printUserbyId(Integer myId);
 
-    User findUserNameById(@Param("id") Integer id);
+    User findUserNameById(Integer id);
 
-    User findUserByName(@Param("name") String name);
+    User findUserByName(String name);
 
-    void deleteById(@Param("id") Integer id);
+//    void deleteById(@Param("id") Integer id);
+
+    User findByEmail(String email);
 
 }
