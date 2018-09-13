@@ -154,11 +154,9 @@ public class DemoApplication implements CommandLineRunner {
         showList(typedQuery2.getResultList());
 
         System.out.println("\n###############Selecting All Records with 75<=ID<=78###############");
-        ParameterExpression<Integer> p1 = criteriaBuilder.parameter(Integer.class);
-        ParameterExpression<Integer> p2 = criteriaBuilder.parameter(Integer.class);
-        Predicate cond1 = criteriaBuilder.greaterThanOrEqualTo(from.get("id"), "75");
-        Predicate cond2 = criteriaBuilder.lessThanOrEqualTo(from.get("id"), "78");
-        TypedQuery typedQuery3 = entitymanager.createQuery(select.where(cond1, cond2));
+        Predicate cond1 = criteriaBuilder.greaterThanOrEqualTo(from.get("id"), 75);
+        Predicate cond2 = criteriaBuilder.lessThanOrEqualTo(from.get("id"), 78);
+        TypedQuery typedQuery3 = entitymanager.createQuery(select.where(cond1, cond2)   );
         showList(typedQuery3.getResultList());
 
 
