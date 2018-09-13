@@ -142,23 +142,30 @@ public class DemoApplication implements CommandLineRunner {
         System.out.println("\n###############Selecting All Records###############");
         CriteriaBuilder criteriaBuilder = entitymanager.getCriteriaBuilder();
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
-        Root from = criteriaQuery.from(Employee.class);
-        CriteriaQuery select = criteriaQuery.select(from);
+        Root emp = criteriaQuery.from(Employee.class);
+        CriteriaQuery select = criteriaQuery.select(emp);
         TypedQuery typedQuery1 = entitymanager.createQuery(select);
         showList(typedQuery1.getResultList());
 
 
         System.out.println("\n###############Selecting All Records with Dept = sales###############");
-        Predicate cond = criteriaBuilder.equal(from.get("dept"), "Sales");
+        Predicate cond = criteriaBuilder.equal(emp.get("dept"), "Sales");
         TypedQuery typedQuery2 = entitymanager.createQuery(select.where(cond));
         showList(typedQuery2.getResultList());
 
         System.out.println("\n###############Selecting All Records with 75<=ID<=78###############");
-        Predicate cond1 = criteriaBuilder.greaterThanOrEqualTo(from.get("id"), 75);
-        Predicate cond2 = criteriaBuilder.lessThanOrEqualTo(from.get("id"), 78);
+        Predicate cond1 = criteriaBuilder.greaterThanOrEqualTo(emp.get("id"), 75);
+        Predicate cond2 = criteriaBuilder.lessThanOrEqualTo(emp.get("id"), 78);
         TypedQuery typedQuery3 = entitymanager.createQuery(select.where(cond1, cond2)   );
         showList(typedQuery3.getResultList());
 
+        System.out.println("\n###############Using GroupBy###############");
+        CriteriaQuery multiSelect = criteriaQuery.multiselect(emp.get("dept"), criteriaBuilder.sum(emp.get("salary")));
+        TypedQuery typedQuery4 = entitymanager.createQuery(multiSelect.groupBy(emp.get("dept")));
+        List<Object[]> results = typedQuery4.getResultList();
+        for(Object[] object : results){
+            System.out.println(object[0] + " : " + object[1]);
+        }
 
         entitymanager.close();
     }
