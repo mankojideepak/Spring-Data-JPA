@@ -17,10 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -147,23 +144,33 @@ public class DemoApplication implements CommandLineRunner {
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
         Root from = criteriaQuery.from(Employee.class);
         CriteriaQuery select = criteriaQuery.select(from);
-        TypedQuery typedQuery = entitymanager.createQuery(select);
-        List resultlist = typedQuery.getResultList();
-        for (Object o : resultlist) {
-            Employee e = (Employee) o;
-            System.out.println("EID : " + e.getId() + ", Ename : " + e.getName() + ", Dept : " + e.getDept());
-        }
+        TypedQuery typedQuery1 = entitymanager.createQuery(select);
+        showList(typedQuery1.getResultList());
+
 
         System.out.println("\n###############Selecting All Records with Dept = sales###############");
         Predicate cond = criteriaBuilder.equal(from.get("dept"), "Sales");
         TypedQuery typedQuery2 = entitymanager.createQuery(select.where(cond));
-        List resultlist2 = typedQuery2.getResultList();
-        for (Object o : resultlist2) {
+        showList(typedQuery2.getResultList());
+
+        System.out.println("\n###############Selecting All Records with 75<=ID<=78###############");
+        ParameterExpression<Integer> p1 = criteriaBuilder.parameter(Integer.class);
+        ParameterExpression<Integer> p2 = criteriaBuilder.parameter(Integer.class);
+        Predicate cond1 = criteriaBuilder.greaterThanOrEqualTo(from.get("id"), "75");
+        Predicate cond2 = criteriaBuilder.lessThanOrEqualTo(from.get("id"), "78");
+        TypedQuery typedQuery3 = entitymanager.createQuery(select.where(cond1, cond2));
+        showList(typedQuery3.getResultList());
+
+
+        entitymanager.close();
+    }
+
+
+    private void showList(List resultlist) {
+        for (Object o : resultlist) {
             Employee e = (Employee) o;
             System.out.println("EID : " + e.getId() + ", Ename : " + e.getName() + ", Dept : " + e.getDept());
         }
-
-        entitymanager.close();
     }
 
 //    private List<Employee> createEmployees() {
