@@ -179,6 +179,13 @@ public class DemoApplication implements CommandLineRunner {
         CriteriaQuery select4 = criteriaQuery.select(criteriaQuery.from(Employee.class)).orderBy(criteriaBuilder.asc(emp.get("dept")), criteriaBuilder.desc(emp.get("salary")));
         runTypedQuery(select4);
 
+        //###################### NAMED QUERIES ########################
+        System.out.println("\n############### eg1-findEmployeeNameByid ###############");
+        TypedQuery tQry = entitymanager.createNamedQuery("findEmployeeNameByid", Employee.class);
+        for (Object o : tQry.getResultList()) {
+            Employee e = (Employee) o;
+            System.out.println("EID : " + e.getId() + ", Ename : " + e.getName() + ", Dept : " + e.getDept() + ", Salary : " + e.getSalary());
+        }
 
         System.out.println();
         entitymanager.close();
