@@ -149,21 +149,21 @@ public class DemoApplication implements CommandLineRunner {
         CriteriaQuery select = criteriaQuery.select(from);
         TypedQuery typedQuery = entitymanager.createQuery(select);
         List resultlist = typedQuery.getResultList();
-        for(Object o:resultlist) {
-            Employee e = (Employee)o;
-            System.out.println("EID : " + e.getId() + " Ename : " + e.getName());
+        for (Object o : resultlist) {
+            Employee e = (Employee) o;
+            System.out.println("EID : " + e.getId() + ", Ename : " + e.getName() + ", Dept : " + e.getDept());
         }
 
         System.out.println("\n###############Selecting All Records with Dept = sales###############");
-        Predicate cond = criteriaBuilder.equal(from.get("dept"),"Sales");
+        Predicate cond = criteriaBuilder.equal(from.get("dept"), "Sales");
         TypedQuery typedQuery2 = entitymanager.createQuery(select.where(cond));
-        List resultlist2 = typedQuery.getResultList();
-        for(Object o:resultlist) {
-            Employee e = (Employee)o;
-            System.out.println("EID : " + e.getId() + " Ename : " + e.getName());
+        List resultlist2 = typedQuery2.getResultList();
+        for (Object o : resultlist2) {
+            Employee e = (Employee) o;
+            System.out.println("EID : " + e.getId() + ", Ename : " + e.getName() + ", Dept : " + e.getDept());
         }
 
-        entitymanager.close( );
+        entitymanager.close();
     }
 
 //    private List<Employee> createEmployees() {
