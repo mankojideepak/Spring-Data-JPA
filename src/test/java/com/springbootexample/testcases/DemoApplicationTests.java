@@ -35,7 +35,7 @@ public class DemoApplicationTests {
     private BookCategoryRepository bookCategoryRepository;
 
     @Autowired
-    private EmployeeRepository  employeeRepository;
+    private EmployeeRepository employeeRepository;
 
 
 //    @Test
@@ -93,26 +93,37 @@ public class DemoApplicationTests {
 
 
     @Test
-    public void getEmpNameByID()
-    {
+    public void getEmpNameByID() {
         System.out.println("\n################ getEmpNameByID TestCase ################");
         System.out.println(employeeRepository.findEmployeeNameByid(74l).getName());
     }
 
 
     @Test
-    public void getUserNameByID()
-    {
+    public void getUserNameByID() {
         System.out.println("\n################ getUserNameByID TestCase ################");
         System.out.println(userRepository.findUserNameById(73).getName());
     }
 
 
     @Test
-    public void getUserbyName()
-    {
+    public void getUserbyName() {
         System.out.println("\n################ getUserbyName TestCase ################");
         User u = userRepository.findUserByName("Vipul");
-        System.out.println("Id : " +u.getId() +", Name : " +u.getName() +", Email : " +u.getEmail());
+        System.out.println("Id : " + u.getId() + ", Name : " + u.getName() + ", Email : " + u.getEmail());
+    }
+
+
+    @Test
+    public void getcountByDept() {
+        System.out.println("\n################ getcountByDept TestCase ################");
+        System.out.println(employeeRepository.countByDept("Sales"));
+    }
+
+    @Test
+    public void deletingUser() {
+        System.out.println("\n################ deletingUser TestCase ################");
+        userRepository.deleteById(8);
+        System.out.println("Deletion Successfull");
     }
 }
