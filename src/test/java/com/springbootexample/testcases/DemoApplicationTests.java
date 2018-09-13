@@ -52,7 +52,7 @@ public class DemoApplicationTests {
 
     @Test
     public void readUsers() {
-        System.out.println("########################################################");
+        System.out.println("\n################ ReadUsers TestCase ################");
         Iterable<User> all = userRepository.findAll();
         all.forEach(e -> System.out.println(e.getId() + " : " + e.getName() + " : " + e.getEmail() + " : " + e.getPhoneNumbers() + "."));
         System.out.println("########################################################");
@@ -95,7 +95,24 @@ public class DemoApplicationTests {
     @Test
     public void getEmpNameByID()
     {
+        System.out.println("\n################ getEmpNameByID TestCase ################");
         System.out.println(employeeRepository.findEmployeeNameByid(74l).getName());
     }
 
+
+    @Test
+    public void getUserNameByID()
+    {
+        System.out.println("\n################ getUserNameByID TestCase ################");
+        System.out.println(userRepository.findUserNameById(73).getName());
+    }
+
+
+    @Test
+    public void getUserbyName()
+    {
+        System.out.println("\n################ getUserbyName TestCase ################");
+        User u = userRepository.findUserByName("Vipul");
+        System.out.println("Id : " +u.getId() +", Name : " +u.getName() +", Email : " +u.getEmail());
+    }
 }
