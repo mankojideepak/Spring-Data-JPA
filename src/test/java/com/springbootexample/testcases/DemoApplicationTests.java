@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 
 @RunWith(SpringRunner.class)
@@ -21,7 +22,7 @@ public class DemoApplicationTests {
 
     @Test
     public void contextLoads() {
-
+        System.out.println("Context Loaded Successfully");
     }
 
     @Autowired
@@ -85,18 +86,18 @@ public class DemoApplicationTests {
 //        System.out.println("#######################################################");
 //    }
 
-//    @Test
-//    public void readEmail() {
-//        String s = userRepository.getEmailByName("Vipul");
-//        System.out.println(s);
-//    }
-
-
     @Test
-    public void getEmpNameByID() {
-        System.out.println("\n################ getEmpNameByID TestCase ################");
-        System.out.println(employeeRepository.findEmployeeNameByid(74l).getName());
+    public void readEmail() {
+        String s = userRepository.getEmailByName("Vipul");
+        System.out.println(s);
     }
+
+
+//    @Test
+//    public void getEmpNameByID() {
+//        System.out.println("\n################ getEmpNameByID TestCase ################");
+////        System.out.println(employeeRepository.findEmployeeNameByid(74L).getName());
+//    }
 
 
     @Test
@@ -120,10 +121,18 @@ public class DemoApplicationTests {
         System.out.println(employeeRepository.countByDept("Sales"));
     }
 
+//    @Test
+//    public void deletingUser() {
+//        System.out.println("\n################ deletingUser TestCase ################");
+//        userRepository.deleteById(8);
+//        System.out.println("Deletion Successfull");
+//    }
+
     @Test
-    public void deletingUser() {
-        System.out.println("\n################ deletingUser TestCase ################");
-        userRepository.deleteById(8);
-        System.out.println("Deletion Successfull");
+    public void getUserbyEmail() {
+        System.out.println("\n################ getUserbyName TestCase ################");
+        User u = userRepository.findByEmail("Tony@Stark.com");
+        System.out.println("Id : " + u.getId() + ", Name : " + u.getName() + ", Email : " + u.getEmail());
     }
+
 }
