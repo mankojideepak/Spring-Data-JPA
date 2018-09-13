@@ -1,5 +1,7 @@
 package com.springbootexample.config;
 
+import com.springbootexample.model.Book;
+import com.springbootexample.model.BookCategory;
 import com.springbootexample.model.Employee;
 import com.springbootexample.repository.EmployeeRepository;
 import org.slf4j.Logger;
@@ -176,7 +178,6 @@ public class DemoApplication implements CommandLineRunner {
         criteriaQuery = criteriaBuilder.createQuery();
         CriteriaQuery select4 = criteriaQuery.select(criteriaQuery.from(Employee.class)).orderBy(criteriaBuilder.asc(emp.get("dept")), criteriaBuilder.desc(emp.get("salary")));
         runTypedQuery(select4);
-
 
 
         System.out.println();
