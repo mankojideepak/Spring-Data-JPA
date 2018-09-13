@@ -144,36 +144,39 @@ public class DemoApplication implements CommandLineRunner {
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
         Root emp = criteriaQuery.from(Employee.class);
 
-        System.out.println("\n############### Selecting All Records ###############");
-        CriteriaQuery select = criteriaQuery.select(emp);
-        TypedQuery typedQuery1 = entitymanager.createQuery(select);
-        showList(typedQuery1.getResultList());
+        System.out.println("\n############### eg1-Selecting All Records ###############");
+        CriteriaQuery select1 = criteriaQuery.select(emp);
+        runTypedQuery(select1);
 
 
-        System.out.println("\n############### Selecting All Records with Dept = sales ###############");
+        System.out.println("\n############### eg2-Selecting All Records with Dept = sales ###############");
         Predicate cond = criteriaBuilder.equal(emp.get("dept"), "Sales");
-        TypedQuery typedQuery2 = entitymanager.createQuery(select.where(cond));
-        showList(typedQuery2.getResultList());
+        CriteriaQuery select2 = criteriaQuery.select(emp).where(cond);
+        runTypedQuery(select2);
 
-        System.out.println("\n############### Selecting All Records with 75<=ID<=78 ###############");
+        System.out.println("\n############### eg3-Selecting All Records with 75<=ID<=78 ###############");
         Predicate cond1 = criteriaBuilder.greaterThanOrEqualTo(emp.get("id"), 75);
         Predicate cond2 = criteriaBuilder.lessThanOrEqualTo(emp.get("id"), 78);
-        TypedQuery typedQuery3 = entitymanager.createQuery(select.where(cond1, cond2));
-        showList(typedQuery3.getResultList());
+        CriteriaQuery select3 = criteriaQuery.select(emp).where(cond1, cond2);
+        runTypedQuery(select3);
 
-        System.out.println("\n############### Using GroupBy ###############");
+        System.out.println("\n############### eg4-Using GroupBy and HavingGroupBy ###############");
         criteriaQuery = criteriaBuilder.createQuery();
         emp = criteriaQuery.from(Employee.class);
-        CriteriaQuery multiSelect1 = criteriaQuery.multiselect(emp.get("dept"), criteriaBuilder.sum(emp.get("salary")));
-        TypedQuery typedQuery4 = entitymanager.createQuery(multiSelect1.groupBy(emp.get("dept")));
-        showListArray(typedQuery4.getResultList());
+        CriteriaQuery multiSelect1 = criteriaQuery.multiselect(emp.get("dept"), criteriaBuilder.sum(emp.get("salary"))).groupBy(emp.get("dept"));
+        runTypedQuery(multiSelect1,true);
 
-        System.out.println("\n############### Using GroupBy and Having ###############");
+        System.out.println("\n############### eg5-Using GroupBy and Having ###############");
         criteriaQuery = criteriaBuilder.createQuery();
         emp = criteriaQuery.from(Employee.class);
-        CriteriaQuery multiSelect2 = criteriaQuery.multiselect(emp.get("dept"), criteriaBuilder.sum(emp.get("salary")));
-        TypedQuery typedQuery5 = entitymanager.createQuery(multiSelect2.groupBy(emp.get("dept")).having(criteriaBuilder.gt(criteriaBuilder.sum(emp.get("salary")),6500)));
-        showListArray(typedQuery5.getResultList());
+        CriteriaQuery multiSelect2 = criteriaQuery.multiselect(emp.get("dept"), criteriaBuilder.sum(emp.get("salary"))).groupBy(emp.get("dept")).having(criteriaBuilder.gt(criteriaBuilder.sum(emp.get("salary")),6500));
+        runTypedQuery(multiSelect2,true);
+
+        System.out.println("\n############### eg6-Using OrderBy ###############");
+        criteriaQuery = criteriaBuilder.createQuery();
+        CriteriaQuery select4 = criteriaQuery.select(criteriaQuery.from(Employee.class)).orderBy(criteriaBuilder.asc(emp.get("dept")), criteriaBuilder.desc(emp.get("salary")));
+        runTypedQuery(select4);
+
 
 
         System.out.println();
@@ -181,15 +184,17 @@ public class DemoApplication implements CommandLineRunner {
     }
 
 
-    private void showList(List resultlist) {
-        for (Object o : resultlist) {
+    private void runTypedQuery(CriteriaQuery cq){
+        TypedQuery<Object> tq= entitymanager.createQuery(cq);
+        for (Object o : tq.getResultList()) {
             Employee e = (Employee) o;
             System.out.println("EID : " + e.getId() + ", Ename : " + e.getName() + ", Dept : " + e.getDept() + ", Salary : " + e.getSalary());
         }
     }
 
-    private void showListArray(List<Object[]> resultlist) {
-        for (Object[] object : resultlist) {
+    private void runTypedQuery(CriteriaQuery cq, boolean  flag){
+        TypedQuery<Object[]> tq= entitymanager.createQuery(cq);
+        for (Object[] object : tq.getResultList()) {
             System.out.println(object[0] + " : " + object[1]);
         }
     }
