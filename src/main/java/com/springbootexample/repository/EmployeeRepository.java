@@ -13,4 +13,6 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
     public List<Employee> findByDept(String deptName, Sort sort);
 
     Employee findEmployeeNameByid(@Param("id") Long id);
+
+    Integer countByDept(@Param("dept") String dept);
 }
