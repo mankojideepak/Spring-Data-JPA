@@ -1,9 +1,7 @@
 package com.springbootexample.config;
 
 import com.springbootexample.model.Employee;
-import com.springbootexample.model.User;
 import com.springbootexample.repository.EmployeeRepository;
-import com.springbootexample.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +19,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -135,29 +133,36 @@ public class DemoApplication implements CommandLineRunner {
 //        List<Employee> employees = createEmployees();
 //        repo.saveAll(employees);
 
-        System.out.println(" -- finding all employees --");
+        System.out.println("\n###############finding all employees###############");
         Iterable<Employee> all = repo.findAll();
         all.forEach(System.out::println);
 
-        System.out.println(" -- finding by dept Sales sort by 'salary' and 'name'  --");
+        System.out.println("\n###############finding by dept Sales sort by 'salary' and 'name'###############");
         List<Employee> list = repo.findByDept("Sales", Sort.by("salary", "name").ascending());
         list.forEach(System.out::println);
 
 
+        System.out.println("\n###############Selecting All Records###############");
         CriteriaBuilder criteriaBuilder = entitymanager.getCriteriaBuilder();
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
         Root from = criteriaQuery.from(Employee.class);
-
-        //select all records
-        System.out.println("Selecting All Records");
         CriteriaQuery select = criteriaQuery.select(from);
         TypedQuery typedQuery = entitymanager.createQuery(select);
         List resultlist = typedQuery.getResultList();
-
         for(Object o:resultlist) {
             Employee e = (Employee)o;
             System.out.println("EID : " + e.getId() + " Ename : " + e.getName());
         }
+
+        System.out.println("\n###############Selecting All Records with Dept = sales###############");
+        Predicate cond = criteriaBuilder.equal(from.get("dept"),"Sales");
+        TypedQuery typedQuery2 = entitymanager.createQuery(select.where(cond));
+        List resultlist2 = typedQuery.getResultList();
+        for(Object o:resultlist) {
+            Employee e = (Employee)o;
+            System.out.println("EID : " + e.getId() + " Ename : " + e.getName());
+        }
+
         entitymanager.close( );
     }
 
