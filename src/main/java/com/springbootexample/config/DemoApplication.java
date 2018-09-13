@@ -166,13 +166,13 @@ public class DemoApplication implements CommandLineRunner {
         criteriaQuery = criteriaBuilder.createQuery();
         emp = criteriaQuery.from(Employee.class);
         CriteriaQuery multiSelect1 = criteriaQuery.multiselect(emp.get("dept"), criteriaBuilder.sum(emp.get("salary"))).groupBy(emp.get("dept"));
-        runTypedQuery(multiSelect1,true);
+        runTypedQuery(multiSelect1, true);
 
         System.out.println("\n############### eg5-Using GroupBy and Having ###############");
         criteriaQuery = criteriaBuilder.createQuery();
         emp = criteriaQuery.from(Employee.class);
-        CriteriaQuery multiSelect2 = criteriaQuery.multiselect(emp.get("dept"), criteriaBuilder.sum(emp.get("salary"))).groupBy(emp.get("dept")).having(criteriaBuilder.gt(criteriaBuilder.sum(emp.get("salary")),6500));
-        runTypedQuery(multiSelect2,true);
+        CriteriaQuery multiSelect2 = criteriaQuery.multiselect(emp.get("dept"), criteriaBuilder.sum(emp.get("salary"))).groupBy(emp.get("dept")).having(criteriaBuilder.gt(criteriaBuilder.sum(emp.get("salary")), 6500));
+        runTypedQuery(multiSelect2, true);
 
         System.out.println("\n############### eg6-Using OrderBy ###############");
         criteriaQuery = criteriaBuilder.createQuery();
@@ -185,16 +185,16 @@ public class DemoApplication implements CommandLineRunner {
     }
 
 
-    private void runTypedQuery(CriteriaQuery cq){
-        TypedQuery<Object> tq= entitymanager.createQuery(cq);
+    private void runTypedQuery(CriteriaQuery cq) {
+        TypedQuery<Object> tq = entitymanager.createQuery(cq);
         for (Object o : tq.getResultList()) {
             Employee e = (Employee) o;
             System.out.println("EID : " + e.getId() + ", Ename : " + e.getName() + ", Dept : " + e.getDept() + ", Salary : " + e.getSalary());
         }
     }
 
-    private void runTypedQuery(CriteriaQuery cq, boolean  flag){
-        TypedQuery<Object[]> tq= entitymanager.createQuery(cq);
+    private void runTypedQuery(CriteriaQuery cq, boolean flag) {
+        TypedQuery<Object[]> tq = entitymanager.createQuery(cq);
         for (Object[] object : tq.getResultList()) {
             System.out.println(object[0] + " : " + object[1]);
         }
