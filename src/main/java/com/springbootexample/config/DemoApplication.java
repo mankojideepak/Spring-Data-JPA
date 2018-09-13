@@ -130,43 +130,53 @@ public class DemoApplication implements CommandLineRunner {
 //        List<Employee> employees = createEmployees();
 //        repo.saveAll(employees);
 
-        System.out.println("\n###############finding all employees###############");
+        System.out.println("\n############### Finding all employees ###############");
         Iterable<Employee> all = repo.findAll();
         all.forEach(System.out::println);
 
-        System.out.println("\n###############finding by dept Sales sort by 'salary' and 'name'###############");
+        System.out.println("\n############### Finding by dept Sales sort by 'salary' and 'name' ###############");
         List<Employee> list = repo.findByDept("Sales", Sort.by("salary", "name").ascending());
         list.forEach(System.out::println);
 
 
-        System.out.println("\n###############Selecting All Records###############");
+        //######################CRITERIA API########################
         CriteriaBuilder criteriaBuilder = entitymanager.getCriteriaBuilder();
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
         Root emp = criteriaQuery.from(Employee.class);
+
+        System.out.println("\n############### Selecting All Records ###############");
         CriteriaQuery select = criteriaQuery.select(emp);
         TypedQuery typedQuery1 = entitymanager.createQuery(select);
         showList(typedQuery1.getResultList());
 
 
-        System.out.println("\n###############Selecting All Records with Dept = sales###############");
+        System.out.println("\n############### Selecting All Records with Dept = sales ###############");
         Predicate cond = criteriaBuilder.equal(emp.get("dept"), "Sales");
         TypedQuery typedQuery2 = entitymanager.createQuery(select.where(cond));
         showList(typedQuery2.getResultList());
 
-        System.out.println("\n###############Selecting All Records with 75<=ID<=78###############");
+        System.out.println("\n############### Selecting All Records with 75<=ID<=78 ###############");
         Predicate cond1 = criteriaBuilder.greaterThanOrEqualTo(emp.get("id"), 75);
         Predicate cond2 = criteriaBuilder.lessThanOrEqualTo(emp.get("id"), 78);
-        TypedQuery typedQuery3 = entitymanager.createQuery(select.where(cond1, cond2)   );
+        TypedQuery typedQuery3 = entitymanager.createQuery(select.where(cond1, cond2));
         showList(typedQuery3.getResultList());
 
-        System.out.println("\n###############Using GroupBy###############");
-        CriteriaQuery multiSelect = criteriaQuery.multiselect(emp.get("dept"), criteriaBuilder.sum(emp.get("salary")));
-        TypedQuery typedQuery4 = entitymanager.createQuery(multiSelect.groupBy(emp.get("dept")));
-        List<Object[]> results = typedQuery4.getResultList();
-        for(Object[] object : results){
-            System.out.println(object[0] + " : " + object[1]);
-        }
+        System.out.println("\n############### Using GroupBy ###############");
+        criteriaQuery = criteriaBuilder.createQuery();
+        emp = criteriaQuery.from(Employee.class);
+        CriteriaQuery multiSelect1 = criteriaQuery.multiselect(emp.get("dept"), criteriaBuilder.sum(emp.get("salary")));
+        TypedQuery typedQuery4 = entitymanager.createQuery(multiSelect1.groupBy(emp.get("dept")));
+        showListArray(typedQuery4.getResultList());
 
+        System.out.println("\n############### Using GroupBy and Having ###############");
+        criteriaQuery = criteriaBuilder.createQuery();
+        emp = criteriaQuery.from(Employee.class);
+        CriteriaQuery multiSelect2 = criteriaQuery.multiselect(emp.get("dept"), criteriaBuilder.sum(emp.get("salary")));
+        TypedQuery typedQuery5 = entitymanager.createQuery(multiSelect2.groupBy(emp.get("dept")).having(criteriaBuilder.gt(criteriaBuilder.sum(emp.get("salary")),6500)));
+        showListArray(typedQuery5.getResultList());
+
+
+        System.out.println();
         entitymanager.close();
     }
 
@@ -174,7 +184,13 @@ public class DemoApplication implements CommandLineRunner {
     private void showList(List resultlist) {
         for (Object o : resultlist) {
             Employee e = (Employee) o;
-            System.out.println("EID : " + e.getId() + ", Ename : " + e.getName() + ", Dept : " + e.getDept());
+            System.out.println("EID : " + e.getId() + ", Ename : " + e.getName() + ", Dept : " + e.getDept() + ", Salary : " + e.getSalary());
+        }
+    }
+
+    private void showListArray(List<Object[]> resultlist) {
+        for (Object[] object : resultlist) {
+            System.out.println(object[0] + " : " + object[1]);
         }
     }
 
