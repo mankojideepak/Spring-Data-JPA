@@ -36,9 +36,9 @@ public class BookApplicationTests {
 
     @Test
     public void findcategories() {
-        System.out.println("\n############### eg2-findcategories ###############");
+        System.out.println("\n############### eg2:findcategories ###############");
        List<Object[]> teasers = em.createNamedQuery("Book.categories").getResultList();
        for (Object[] t : teasers)
-           System.out.println(t[0] + " - " +t[1] +" - " +t[2]);
+           System.out.println(t[0] + " -- " +t[1] +" -- " +t[2]);
     }
 }
