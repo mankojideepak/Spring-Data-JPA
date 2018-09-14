@@ -34,34 +34,11 @@ public class UserAddress {
 
     private String near;
 
-    public void setFlatNo(Integer flatNo) {
+    public UserAddress(Integer flatNo, String area, String city, String state, String near) {
         this.flatNo = flatNo;
-    }
-
-    public void setArea(String area) {
         this.area = area;
-    }
-
-    public void setCity(String city) {
         this.city = city;
-    }
-
-    public void setState(String state) {
         this.state = state;
-    }
-
-    public void setNear(String near) {
         this.near = near;
     }
-
-    public UserAddress(Integer flatNo, String area, String city, String state, String near) {
-        setFlatNo(flatNo);
-        setArea(area);
-        setCity(city);
-        setState(state);
-    }
-
-    public UserAddress() {
-    }
-
 }
