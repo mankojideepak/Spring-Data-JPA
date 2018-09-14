@@ -87,34 +87,6 @@ public class DemoApplication
 //			logger.info(Manufacturer.toString());
 //		}
 //
-//
-//        // ################ INSERTING VALUES INTO BOOKCATEGORY ENTITY ##################
-//        BookCategory categoryA = new BookCategory("Category A");
-//        Set bookAs = new HashSet<Book>(){{
-//            add(new Book("Book A1", categoryA));
-//            add(new Book("Book A2", categoryA));
-//            add(new Book("Book A3", categoryA));
-//        }};
-//        categoryA.setBooks(bookAs);
-//
-//        BookCategory categoryB = new BookCategory("Category B");
-//        Set bookBs = new HashSet<Book>(){{
-//            add(new Book("Book B1", categoryB));
-//            add(new Book("Book B2", categoryB));
-//            add(new Book("Book B3", categoryB));
-//        }};
-//        categoryB.setBooks(bookBs);
-//
-//        bookCategoryRepository.saveAll(new HashSet<BookCategory>() {{
-//            add(categoryA);
-//            add(categoryB);
-//        }});
-//
-//        // ################ FETCHING LIST OF BOOKCATEGORY ##################
-//        for (BookCategory bookCategory : bookCategoryRepository.findAll()) {
-//            logger.info(bookCategory.toString());
-//        }
-//
 //        // ################ INSERTING VALUES INTO EMPLOYEE ENTITY ##################
 //            List<Employee> employees = createEmployees();
 //        repo.saveAll(employees);
