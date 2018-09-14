@@ -6,6 +6,10 @@ import javax.persistence.*;
 
 @Component
 @Entity
+@NamedQueries(value = {
+        @NamedQuery(query = "Select b from Book b", name = "Book.findBooks"),
+        @NamedQuery(name = "Book.categories", query = "select b.id, b.name, bCat.name from Book b left outer join BookCategory bCat on b.bookCategory = bCat.id")
+})
 public class Book {
     private int id;
     private String name;
