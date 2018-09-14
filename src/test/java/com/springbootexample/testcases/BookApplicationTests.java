@@ -37,8 +37,33 @@ public class BookApplicationTests {
     @Test
     public void findcategories() {
         System.out.println("\n############### eg2:findcategories ###############");
-       List<Object[]> teasers = em.createNamedQuery("Book.categories").getResultList();
-       for (Object[] t : teasers)
+       List<Object[]> categories = em.createNamedQuery("Book.categories").getResultList();
+       for (Object[] t : categories)
            System.out.println(t[0] + " -- " +t[1] +" -- " +t[2]);
+    }
+
+    @Test
+    public void findBookbyIdTest() {
+        System.out.println("\n############### eg3-findBookbyIdTest ###############");
+        Book b = em.createNamedQuery("Book.findBookbyId", Book.class).setParameter("id", 85).getSingleResult();
+            System.out.println("ID : " + b.getId() + ", Name : " + b.getName());
+    }
+
+    @Test
+    public void findBookbyNameTest() {
+        System.out.println("\n############### eg4-findBookbyNameTest ###############");
+        List<Book> books = em.createNamedQuery("Book.findBookbyName", Book.class).setParameter(1, "The Power").getResultList();
+        for (Book b : books) {
+            System.out.println("ID : " + b.getId() + ", Name : " + b.getName());
+        }
+    }
+
+    @Test
+    public void findBookUsingLikeTest() {
+        System.out.println("\n############### eg5-findBookUsingLikeTest ###############");
+        List<Book> books = em.createNamedQuery("Book.findBookUsingLike", Book.class).setParameter("name","The").getResultList();
+        for (Book b : books) {
+            System.out.println("ID : " + b.getId() + ", Name : " + b.getName());
+        }
     }
 }
