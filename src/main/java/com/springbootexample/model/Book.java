@@ -8,7 +8,10 @@ import javax.persistence.*;
 @Entity
 @NamedQueries(value = {
         @NamedQuery(query = "Select b from Book b", name = "Book.findBooks"),
-        @NamedQuery(name = "Book.categories", query = "select b.id, b.name, bCat.name from Book b left outer join BookCategory bCat on b.bookCategory = bCat.id")
+        @NamedQuery(name = "Book.categories", query = "select b.id, b.name, bCat.name from Book b left outer join BookCategory bCat on b.bookCategory = bCat.id"),
+        @NamedQuery(name = "Book.findBookbyId", query = "select b from Book b where b.id = :id"),
+        @NamedQuery(name = "Book.findBookbyName", query = "select b from Book b where b.name = ?1"),
+        @NamedQuery(name = "Book.findBookUsingLike", query = "select b from Book b where b.name like CONCAT(:name,'%')")
 })
 public class Book {
     private int id;
