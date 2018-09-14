@@ -1,13 +1,10 @@
 package com.springbootexample.config;
 
-import com.springbootexample.model.Book;
-import com.springbootexample.model.BookCategory;
 import com.springbootexample.model.Employee;
 import com.springbootexample.repository.EmployeeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +12,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -23,26 +19,19 @@ import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 import java.util.List;
 
-
+@SuppressWarnings("unused")
 @EnableAutoConfiguration
 @ComponentScan(basePackages = "com.springbootexample.*")
 @EntityScan(basePackages = "com.springbootexample.*")
 @EnableJpaRepositories(basePackages = {"com.springbootexample.*"})
 @SpringBootApplication
-public class DemoApplication implements CommandLineRunner {
+public class DemoApplication
+//        implements CommandLineRunner
+{
     private static final Logger logger = LoggerFactory.getLogger(DemoApplication.class);
 
     @PersistenceContext
     private EntityManager entitymanager;
-
-//    @Autowired
-//    private ProductRepository ProductRepository;
-//
-//    @Autowired
-//    private BookCategoryRepository bookCategoryRepository;
-//
-//    @Autowired
-//    private ManufacturerRepository ManufacturerRepository;
 
     @Autowired
     private EmployeeRepository repo;
@@ -51,10 +40,11 @@ public class DemoApplication implements CommandLineRunner {
         SpringApplication.run(DemoApplication.class, args);
     }
 
+////############################### INSERTING VALUES #####################################
 //    @Override
 //    @Transactional
 //    public void run(String... strings) throws Exception {
-//		// save a couple of Products
+//		//################ INSERTING VALUES INTO MANUFACTURER ENTITY ##################
 //		Manufacturer ManufacturerA = new Manufacturer("Manufacturer A");
 //		Manufacturer ManufacturerB = new Manufacturer("Manufacturer B");
 //		Manufacturer ManufacturerC = new Manufacturer("Manufacturer C");
@@ -71,12 +61,12 @@ public class DemoApplication implements CommandLineRunner {
 //			}}));
 //		}});
 //
-//		// fetch all Products
+//		////################ FETCHING LIST OF PRODUCTS ##################
 //		for(Product Product : ProductRepository.findAll()) {
 //			logger.info(Product.toString());
 //		}
 //
-//		// save a couple of Manufacturers
+//		// ################ INSERTING VALUES INTO PRODUCT ENTITY ##################
 //		Product ProductA = new Product("Product A");
 //		Product ProductB = new Product("Product B");
 //
@@ -92,13 +82,13 @@ public class DemoApplication implements CommandLineRunner {
 //			}}));
 //		}});
 //
-//		// fetch all Manufacturers
+//		//################ FETCHING LIST OF MANUFACTURERS ##################
 //		for(Manufacturer Manufacturer : ManufacturerRepository.findAll()) {
 //			logger.info(Manufacturer.toString());
 //		}
-
-
-//        // save a couple of categories
+//
+//
+//        // ################ INSERTING VALUES INTO BOOKCATEGORY ENTITY ##################
 //        BookCategory categoryA = new BookCategory("Category A");
 //        Set bookAs = new HashSet<Book>(){{
 //            add(new Book("Book A1", categoryA));
@@ -120,17 +110,19 @@ public class DemoApplication implements CommandLineRunner {
 //            add(categoryB);
 //        }});
 //
-//        // fetch all categories
+//        // ################ FETCHING LIST OF BOOKCATEGORY ##################
 //        for (BookCategory bookCategory : bookCategoryRepository.findAll()) {
 //            logger.info(bookCategory.toString());
 //        }
+//
+//        // ################ INSERTING VALUES INTO EMPLOYEE ENTITY ##################
+//            List<Employee> employees = createEmployees();
+//        repo.saveAll(employees);
 //    }
 
-    @Override
+    //    @Override
     @Transactional
     public void run(String... strings) throws Exception {
-//        List<Employee> employees = createEmployees();
-//        repo.saveAll(employees);
 
         System.out.println("\n############### Finding all employees ###############");
         Iterable<Employee> all = repo.findAll();
