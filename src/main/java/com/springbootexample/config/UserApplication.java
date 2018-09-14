@@ -28,7 +28,7 @@ public class UserApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        UserAddress ua = new UserAddress(456, "Sector-16", "Noida", "UP", "Sec-16 Metro Station");
+        UserAddress ua = new UserAddress(16846, "Sector-16", "Noida", "Uttar Pradesh", "KiwiTech");
         userAddressRepository.save(ua);
         System.out.println("User Address Inserted Successfully");
     }
